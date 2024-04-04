@@ -11,8 +11,9 @@ export default function()
 {
     http.get('https://test.k6.io');
     sleep(1);
-    http.get('https://test.k6.io/contacts.php');
-    sleep(2);
-    http.get('https://test.k6.io/news.php');
-    sleep(2);
+    check(response, {
+        'status is 200': (res) => res.status === 200,
+        'page is startpage': (res) => res.body.includes('Collection of simple web-pages suitable for load testing')
+
+    });
 }
